@@ -4,7 +4,7 @@
 public class TestUser {
     /*    private EmbeddedDatabase embeddedDatabase;
 
-        private JdbcTemplate by.onlineStore.bean.jdbcTemplate;
+        private JdbcTemplate by.onlineStore.bean.Repository;
 
         private UserRepository userRepository;
 
@@ -15,9 +15,9 @@ public class TestUser {
                     .setType(EmbeddedDatabaseType.H2)
                     .build();
 *//*
-            by.onlineStore.bean.jdbcTemplate = new JdbcTemplate(embeddedDatabase);
+            by.onlineStore.bean.Repository = new JdbcTemplate(embeddedDatabase);
 
-            userRepository = new UserRepositoryImpl(by.onlineStore.bean.jdbcTemplate);
+            userRepository = new UserRepositoryImpl(by.onlineStore.bean.Repository);
         }
 
         @Test
@@ -54,7 +54,7 @@ public class TestUser {
 
         @Test
         public void testUpdate() {
-            Person person = by.onlineStore.bean.jdbcTemplate.queryForObject("select * from person where id = 'jack-daniels'", PersonRepository.ROW_MAPPER);
+            Person person = by.onlineStore.bean.Repository.queryForObject("select * from person where id = 'jack-daniels'", PersonRepository.ROW_MAPPER);
             person.setName("Johny Walker");
 
             person = personRepository.save(person);
@@ -65,7 +65,7 @@ public class TestUser {
 
         @Test(expected = DataIntegrityViolationException.class)
         public void testUpdateInvalid() {
-            Person person = by.onlineStore.bean.jdbcTemplate.queryForObject("select * from person where id = 'jack-daniels'", PersonRepository.ROW_MAPPER);
+            Person person = by.onlineStore.bean.Repository.queryForObject("select * from person where id = 'jack-daniels'", PersonRepository.ROW_MAPPER);
             person.setName(null);
 
             personRepository.save(person);
@@ -73,7 +73,7 @@ public class TestUser {
 
         @Test(expected = DataIntegrityViolationException.class)
         public void testUpdateConflict() {
-            Person person = by.onlineStore.bean.jdbcTemplate.queryForObject("select * from person where id = 'jack-daniels'", PersonRepository.ROW_MAPPER);
+            Person person = by.onlineStore.bean.Repository.queryForObject("select * from person where id = 'jack-daniels'", PersonRepository.ROW_MAPPER);
             person.setEmail("georgedickel@example.com");
 
             personRepository.save(person);

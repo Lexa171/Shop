@@ -1,17 +1,18 @@
-package by.onlineStore.jdbcTemplate;
+package by.onlineStore.Repository;
 
 import by.onlineStore.bean.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 /**
  * Created by Admin on 10.05.2017.
  */
-public interface UserRepository {
-    User findById(Integer idUser);
+public interface UserRepositoryJDBC {
+    User findById(Long idUser);
     User getUserByName(String nameUser);
     List<User> getAllUsers();
-    int deleteUser(Integer idUser);
+    void deleteUser(Long idUser);
     void updateUser(User user);
     void saveUser(User user);
 }

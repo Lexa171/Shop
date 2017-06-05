@@ -1,17 +1,18 @@
-package by.onlineStore.jdbcTemplate;
+package by.onlineStore.Repository;
 
 import by.onlineStore.bean.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 /**
  * Created by Admin on 10.05.2017.
  */
-public interface ProductRepository {
-    Product findById(Integer idProduct);
+public interface ProductRepositoryJDBC{
+   Product findById(Long idProduct);
     Product getProductByName(String nameProduct);
     List<Product> getAllProduct();
-    int deleteProduct(Integer idProduct);
+    void deleteProduct(Long idProduct);
     void updateProduct(Product product);
     void saveProduct(Product product);
 }

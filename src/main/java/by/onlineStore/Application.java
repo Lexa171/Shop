@@ -1,33 +1,20 @@
 package by.onlineStore;
 
-import by.onlineStore.bean.Product;
-import by.onlineStore.bean.User;
-import by.onlineStore.jdbcTemplate.ProductRepository;
-import by.onlineStore.jdbcTemplate.UserRepository;
-import by.onlineStore.jdbcTemplate.impl.ProductRepositoryImpl;
-import by.onlineStore.jdbcTemplate.impl.UserRepositoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Admin on 10.05.2017.
  */
 @SpringBootApplication
-public class Application /*extends SpringBootServletInitializer*/ {
-    @Autowired
-    DataSource dataSource;
-    @Autowired
-    UserRepository userRepository;
+public class Application /*extends SpringBootServletInitializer */{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)throws Exception {
         SpringApplication.run(Application.class, args);
     }
 
