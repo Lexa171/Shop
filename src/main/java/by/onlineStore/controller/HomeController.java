@@ -2,8 +2,8 @@ package by.onlineStore.controller;
 
 
 import by.onlineStore.bean.Product;
-import by.onlineStore.Repository.ProductRepository;
-import by.onlineStore.Repository.UserRepository;
+import by.onlineStore.repository.ProductRepository;
+import by.onlineStore.repository.UserRepository;
 import by.onlineStore.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 @RequestMapping(value = {"/", ""}, produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
 public class HomeController {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     public void viewHome() {
@@ -32,7 +32,7 @@ public class HomeController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Product getProduct(@PathVariable("id") Integer id) {
+    public Product getProduct(@PathVariable("id") Long id) {
         ResponseEntity.status(HttpStatus.OK);
         Product product = productRepository.getOne(id);
         return product;

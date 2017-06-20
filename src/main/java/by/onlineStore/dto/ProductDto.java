@@ -1,52 +1,44 @@
 package by.onlineStore.dto;
 
-import by.onlineStore.bean.Product;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
-/**
- * Created by Admin on 05.06.2017.
- */
+
 public class ProductDto {
-    private Long idProduct;
+
     @NotNull
+    private Long productId;
+
     @Size(min = 3, max = 20,
             message = "Product name must be between 3 and 20 characters long.")
     @Pattern(regexp = "^[a-zA-Z0-9]+$",
             message = "Product name must be alphanumeric with no spaces")
     private String nameProduct;
-    @NotNull
+
     private Integer typeProduct;
-    @NotNull
+
     private Integer priceProduct;
-    @NotNull
+
     private String description;
-    @NotNull
+
     private Integer quantity;
-    @NotNull
-    private Long idProvider;
-    @NotNull
+
+    private Long providerId;
+
     private Integer evaluation;
-    public ProductDto(){}
-    public ProductDto(Product product){
-        this.idProduct=product.getIdProduct();
-        this.nameProduct=product.getNameProduct();
-        this.typeProduct=product.getTypeProduct();
-        this.priceProduct=product.getPriceProduct();
-        this.description=product.getDescription();
-        this.quantity=product.getQuantity();
-        this.idProvider=product.getIdProvider();
-        this.evaluation=product.getEvaluation();
+
+    private List<UserDto> users;
+
+    private List<CommentDto> comments;
+
+    public Long getProductId() {
+        return productId;
     }
 
-    public Long getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getNameProduct() {
@@ -89,12 +81,12 @@ public class ProductDto {
         this.quantity = quantity;
     }
 
-    public Long getIdProvider() {
-        return idProvider;
+    public Long getProviderId() {
+        return providerId;
     }
 
-    public void setIdProvider(Long idProvider) {
-        this.idProvider = idProvider;
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
     }
 
     public Integer getEvaluation() {
@@ -104,4 +96,22 @@ public class ProductDto {
     public void setEvaluation(Integer evaluation) {
         this.evaluation = evaluation;
     }
+
+    public List<UserDto> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserDto> users) {
+        this.users = users;
+    }
+
+    public List<CommentDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDto> comments) {
+        this.comments = comments;
+    }
 }
+
+

@@ -1,68 +1,64 @@
 package by.onlineStore.bean;
 
-import by.onlineStore.dto.UserDto;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * Created by Admin on 14.05.2017.
- */
 @Entity
-@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = "name_User") })
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class User {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id_User", unique = true, nullable = false)
-    private Long idUser;
-    @Column(name = "name_User", unique = true, nullable = false, length = 20)
-    private String nameUser;
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
+
+    @Column(name = "name", unique = true, nullable = false, length = 20)
+    private String name;
+
     @Column(name = "password", nullable = false, length = 30)
     private String password;
-    @Column(name = "mail_User", length = 40, unique = true)
-    private String mailUser;
+
+    @Column(name = "mail", length = 50, unique = true)
+    private String mail;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "basket", catalog = "mybd", joinColumns = {
+            @JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "product_id",
+                    nullable = false, updatable = false)})
+    private List<Product> products;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     public User() {
     }
 
     public User(Long id_user, String name_user, String mail_user) {
-        idUser = id_user;
-        nameUser = name_user;
-        mailUser = mail_user;
+        id = id_user;
+        name = name_user;
+        mail = mail_user;
     }
 
-    public User(Long id_user, String name_user, String password, String mail_user) {
-        idUser = id_user;
-        nameUser = name_user;
-        this.password = password;
-        mailUser = mail_user;
-    }
-    public User(UserDto userDto) {
-        idUser = userDto.getUserId();
-        nameUser = userDto.getUserName();
-        this.password = userDto.getUserPassword();
-        mailUser = userDto.getUserMail();
+    public Long getId() {
+        return id;
     }
 
-
-    public Long getIdUser() {
-        return idUser;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public String getName() {
+        return name;
     }
 
-    public String getNameUser() {
-        return nameUser;
-    }
-
-    public void setNameUser(String nameUser) {
-        this.nameUser = nameUser;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -73,16 +69,34 @@ public class User {
         this.password = password;
     }
 
-    public String getMailUser() {
-        return mailUser;
+    public String getMail() {
+        return mail;
     }
 
-    public void setMailUser(String mailUser) {
-        this.mailUser = mailUser;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
 
     @Override
     public String toString() {
-        return "User INFO [ID: " + idUser + ", Name: " + nameUser + "]";
+        return "User INFO [ID: " + id
+                + ", Name: " + name + "]";
     }
 }

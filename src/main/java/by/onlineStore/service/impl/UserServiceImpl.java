@@ -1,7 +1,10 @@
 package by.onlineStore.service.impl;
 
-import by.onlineStore.Repository.UserRepository;
-import by.onlineStore.bean.User;
+import by.onlineStore.repository.UserRepository;
+import by.onlineStore.dto.CreateUserDto;
+import by.onlineStore.dto.UserDto;
+import by.onlineStore.exception.NotFoundException;
+import by.onlineStore.mapper.UserMapper;
 import by.onlineStore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,22 +12,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created by Admin on 05.06.2017.
- */
 @Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
+
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
-    public User getUserById(Long userId) {
-        return userRepository.getOne(userId);
+    public UserDto getUserById(Long userId) {
+        return userMapper.convertToUserDto(userRepository.findOneById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found")));
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        return userMapper.convertToListUserDto(userRepository.findAll());
     }
 
     @Override
@@ -33,7 +39,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveOrUpdateUser(User user) {
-        userRepository.save(user);
+    public UserDto saveUser(CreateUserDto createUserDto) {
+        return userMapper.convertToUserDto(userRepository.saveAndFlush(
+                userMapper.convertToUser(createUserDto)));
     }
+
+    @Override
+    public UserDto updateUser(UserDto userDto) {
+        return userMapper.convertToUserDto(userRepository.saveAndFlush(
+                userMapper.convertToUser(userDto)));
+    }
+
+
 }

@@ -1,95 +1,87 @@
 package by.onlineStore.bean;
 
-import by.onlineStore.dto.ProductDto;
-
 import javax.persistence.*;
+
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * Created by Admin on 14.05.2017.
- */
 @Entity
-@Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = "name_Product") })
-public class Product{
+@Table(name = "product", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
+public class Product {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id_Product", unique = true, nullable = false)
-    private Long idProduct;
-    @Column(name = "name_Product", unique = true, nullable = false, length = 20)
-    private String nameProduct;
-    @Column(name = "type_Product", nullable = false)
-    private Integer typeProduct;
-    @Column(name = "price_Product", nullable = false)
-    private Integer priceProduct;
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
+
+    @Column(name = "name", unique = true, nullable = false, length = 20)
+    private String name;
+
+    @Column(name = "type", nullable = false)
+    private Integer type;
+
+    @Column(name = "price", nullable = false)
+    private Integer price;
+
     @Column(name = "description", nullable = false, length = 100)
     private String description;
+
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
-    @Column(name = "id_Provider", nullable = false)
-    private Long idProvider;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id")
+    private Provider provider;
+
     @Column(name = "evaluation", nullable = false)
     private Integer evaluation;
-    public Product(){}
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
+    private List<User> users;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    public Product() {
+    }
 
     public Product(Long id_product, String name_product, Integer price_product) {
-       idProduct=id_product;
-       nameProduct=name_product;
-       priceProduct=price_product;
+        id = id_product;
+        name = name_product;
+        price = price_product;
     }
 
-    public Product(Long id_product, String name_product, Integer  type_Product, Integer price_product, String description,
-                   Integer quantity, Long id_Provider, Integer evaluation) {
-        idProduct=id_product;
-        nameProduct=name_product;
-        typeProduct=type_Product;
-        priceProduct=price_product;
-        this.description=description;
-        this.quantity=quantity;
-        idProvider=id_Provider;
-        this.evaluation=evaluation;
-    }
-    public Product(ProductDto productDto){
-        this.idProduct=productDto.getIdProduct();
-        this.nameProduct=productDto.getNameProduct();
-        this.typeProduct=productDto.getTypeProduct();
-        this.priceProduct=productDto.getPriceProduct();
-        this.description=productDto.getDescription();
-        this.quantity=productDto.getQuantity();
-        this.idProvider=productDto.getIdProvider();
-        this.evaluation=productDto.getEvaluation();
+    public Long getId() {
+        return id;
     }
 
-    public Long getIdProduct() {
-        return idProduct;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
+    public String getName() {
+        return name;
     }
 
-    public String getNameProduct() {
-        return nameProduct;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
+    public Integer getType() {
+        return type;
     }
 
-    public Integer getTypeProduct() {
-        return typeProduct;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public void setTypeProduct(Integer typeProduct) {
-        this.typeProduct = typeProduct;
+    public Integer getPrice() {
+        return price;
     }
 
-    public Integer getPriceProduct() {
-        return priceProduct;
-    }
-
-    public void setPriceProduct(Integer priceProduct) {
-        this.priceProduct = priceProduct;
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public String getDescription() {
@@ -108,12 +100,12 @@ public class Product{
         this.quantity = quantity;
     }
 
-    public Long getIdProvider() {
-        return idProvider;
+    public Provider getProvider() {
+        return provider;
     }
 
-    public void setIdProvider(Long idProvider) {
-        this.idProvider = idProvider;
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
     public Integer getEvaluation() {
@@ -123,8 +115,26 @@ public class Product{
     public void setEvaluation(Integer evaluation) {
         this.evaluation = evaluation;
     }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
-        return "Product INFO [ID: " + idProduct + ", Name: " + nameProduct + "]";
+        return "Product INFO [ID: " + id
+                + ", Name: " + name + "]";
     }
 }

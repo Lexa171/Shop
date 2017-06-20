@@ -1,15 +1,18 @@
 package by.onlineStore.service;
 
-import by.onlineStore.bean.Product;
+import by.onlineStore.dto.CreateProductDto;
+import by.onlineStore.dto.ProductDto;
 
 import java.util.List;
 
-/**
- * Created by Admin on 05.06.2017.
- */
 public interface ProductService {
-    Product getUserById(Long productId);
-    List<Product> getAllProduct();
+    ProductDto getProductById(Long productId);
+
+    List<ProductDto> getAllProduct();
+
     void deleteProduct(Long productId);
-    void saveOrUpdateProduct(Product product);
+
+    ProductDto saveProduct(CreateProductDto createProductDto);
+
+    ProductDto updateProduct(ProductDto productDto);
 }

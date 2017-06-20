@@ -1,15 +1,18 @@
 package by.onlineStore.service;
 
-import by.onlineStore.bean.User;
+import by.onlineStore.dto.CreateUserDto;
+import by.onlineStore.dto.UserDto;
 
 import java.util.List;
 
-/**
- * Created by Admin on 05.06.2017.
- */
 public interface UserService {
-    User getUserById(Long userId);
-    List<User> getAllUsers();
+    UserDto getUserById(Long userId);
+
+    List<UserDto> getAllUsers();
+
     void deleteUser(Long userId);
-    void saveOrUpdateUser(User user);
+
+    UserDto saveUser(CreateUserDto createUserDto);
+
+    UserDto updateUser(UserDto userDto);
 }
